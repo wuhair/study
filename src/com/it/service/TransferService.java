@@ -11,10 +11,12 @@ public class TransferService {
 	public void transfer(String out,String in,int money) {
 		Connection conn = null;
 		try {
+			//开启事务的conn必须是同一个才能生效
 			conn = DBUtil.getConnection();
 			conn.setAutoCommit(false);
-			td.transferOut(out, money);
-			td.transferIn(in, money);
+			td.transferOut(conn,out, money);
+			int i = 1/0;
+			td.transferIn(conn,in, money);
 			conn.commit();
 		} catch (SQLException e) {
 			try {
